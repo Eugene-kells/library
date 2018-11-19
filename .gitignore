@@ -1,0 +1,12 @@
+.git/
+
+.idea/
+
+__pycache__/
+
+static/
+media/
+
+migrations/
+
+settings.py

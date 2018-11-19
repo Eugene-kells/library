@@ -1,0 +1,28 @@
+version: "3"
+services:
+
+  db:
+    restart: always
+    image: postgres:11.0
+    expose:
+      - 5432
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_DB=microblog_db
+#    volumes:
+#      - ./tmp/postgresql_data:/var/lib/postgresql/data
+
+  web:
+    restart: always
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 5000:5000
+#    environment:
+#      - DATABASE_URL=postgres+psycopg2://postgres:postgres@postgres:5432/microblog_db
+    depends_on:
+      - db
+#    entrypoint: ["python", "/libraryapp1/run.py"]
+    command: python3 /app/library/manage.py runserver 0.0.0.0:5000
