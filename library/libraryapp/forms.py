@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from . import models
 
@@ -39,4 +40,28 @@ class CommentForm(forms.ModelForm):
 
         widgets = {
             'text': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
+        }
+
+class CustomUserCreationForm(UserCreationForm):
+
+    class Meta:
+        model = models.CustomUser
+
+        fields = ('username', 'first_name', 'last_name', 'email', 'status', 'description', 'photo')
+        # fields = '__all__'
+
+        widgets = {
+            'description': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
+        }
+
+class CustomUserUpdateForm(UserChangeForm):
+
+    class Meta:
+        model = models.CustomUser
+
+        fields = ('username', 'first_name', 'last_name', 'email', 'status', 'description', 'photo')
+        # fields = '__all__'
+
+        widgets = {
+            'description': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
         }

@@ -2,7 +2,6 @@ from django.urls import path, include
 
 from . import views
 
-
 urlpatterns = [
     path('', views.AboutView.as_view(), name='about'),
     # book block
@@ -20,7 +19,11 @@ urlpatterns = [
     path('author/new/', views.AuthorCreateView.as_view(), name='author_new'),
     path('author/<int:pk>/update/', views.AuthorUpdateView.as_view(), name='author_update'),
     # authentication block TODO :: make a different app for that
-    path('', include('django.contrib.auth.urls')),
+    path('', include('django.contrib.auth.urls')), # login, logout and reset password
     path('signup/', views.UserCreateView.as_view(), name='signup'),
-    path('signup/update/', views.UserUpdateView.as_view(), name='signup_update'),
+    path('user/<int:pk>', views.UserDetailView.as_view(), name='user'),
+    path('user/<int:pk>/update/', views.UserUpdateView.as_view(), name='signup_update'),
 ]
+
+
+
