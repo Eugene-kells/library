@@ -1,11 +1,13 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import (TemplateView, ListView,
                                   DetailView, CreateView,
                                   UpdateView)
 from django.shortcuts import get_object_or_404, redirect
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.urls import reverse_lazy
+from django.contrib.auth.views import LoginView, PasswordChangeView
+from django.template import RequestContext
 
 from . import models, forms
 
@@ -33,7 +35,7 @@ class BookDetailView(DetailView):
     template_name = 'libraryapp/book_detail.html'
 
 
-class BookCreateView(CreateView, LoginRequiredMixin):
+class BookCreateView(LoginRequiredMixin, CreateView):
     model = models.Book
     form_class = forms.BookForm
 
@@ -48,7 +50,7 @@ class BookCreateView(CreateView, LoginRequiredMixin):
         return reverse_lazy('libraryapp:book_detail', kwargs={'pk': book.pk})
 
 
-class BookUpdateView(UpdateView, LoginRequiredMixin):
+class BookUpdateView(LoginRequiredMixin, UpdateView):
     models = models.Book
     form_class = forms.BookForm
     template_name = 'libraryapp/book_update.html'
@@ -79,7 +81,7 @@ class AuthorDetailView(DetailView):
     template_name = 'libraryapp/author_detail.html'
 
 
-class AuthorCreateView(CreateView, LoginRequiredMixin):
+class AuthorCreateView(LoginRequiredMixin, CreateView):
     model = models.Author
     form_class = forms.AuthorForm
     template_name = 'libraryapp/author_create.html'
@@ -92,7 +94,7 @@ class AuthorCreateView(CreateView, LoginRequiredMixin):
         return reverse_lazy('libraryapp:author_detail', kwargs={'pk': author.pk})
 
 
-class AuthorUpdateView(UpdateView, LoginRequiredMixin):
+class AuthorUpdateView(LoginRequiredMixin, UpdateView):
     model = models.Author
     form_class = forms.AuthorForm
     template_name = 'libraryapp/author_update.html'
@@ -107,7 +109,7 @@ class AuthorUpdateView(UpdateView, LoginRequiredMixin):
 
 
 #############################################################
-# user block
+# user authentication block
 
 class UserCreateView(CreateView):
     model = models.CustomUser
@@ -115,27 +117,104 @@ class UserCreateView(CreateView):
     template_name = 'registration/signup.html'
 
     # success_url = 'registration/user_detail.html'
+    def get_success_url(self):
+        return reverse_lazy('user', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
         user = form.save()
-        return reverse_lazy('libraryapp:user', kwargs={'pk': user.pk})
+        return super(UserCreateView, self).form_valid(form)
 
 
-class UserUpdateView(UpdateView):
+class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = models.CustomUser
     form_class = forms.CustomUserUpdateForm
-    template_name = 'registration/user_detail.html'
+    template_name = 'registration/user_update.html'
 
-    # success_url = 'registration/user_detail.html'
+    login_url = '/login/'
+
+
+    def get_success_url(self):
+        return reverse_lazy('user', kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        user = form.save() # here is some problem
+        return super(UserUpdateView, self).form_valid(form)
+
+    # check if this user is owner of the form they want to access
+    def test_func(self):
+        return self.kwargs['pk'] == self.request.user.pk
+
+
+class UserDetailView(LoginRequiredMixin, DetailView):
+    model = models.CustomUser
+    template_name = 'registration/user_detail.html'
+    login_url = '/login/'
+
+
+
+class UserLoginView(LoginView):
+    form_class =forms.CustomUserLoginForm
+    template_name = 'registration/login.html'
+
+
+
+class UserChangePasswordView(LoginRequiredMixin, UserPassesTestMixin, PasswordChangeView):
+    form_class = forms.CustomUserChangePassword
+    template_name = 'registration/change_password.html'
+
+    login_url = '/login/'
+
+
+    def get_success_url(self):
+        return reverse_lazy('about')
 
     def form_valid(self, form):
         user = form.save()
-        return reverse_lazy('libraryapp:user', kwargs={'pk': user.pk})
+        return super(UserChangePasswordView, self).form_valid(form)
+
+    # check if this user is owner of the form they want to access
+    def test_func(self):
+        return self.kwargs['pk'] == self.request.user.pk
 
 
-class UserDetailView(DetailView):
-    model = models.CustomUser
-    template_name = 'registration/user_detail.html'
+############################################################
+# default error pages block
+
+# def error_400(request, exception):
+def error_400(request): # TODO :: change it back
+    context = RequestContext(request)
+    err_code = 400
+    response = render(request, 'errors/error_400.html', {'code': err_code}, context)
+    response.status_code = 400
+    return response
+    # return render(request, 'errors/error_404.html')
+
+# def error_403(request, exception):
+def error_403(request): # TODO :: change it back
+    context = RequestContext(request)
+    err_code = 403
+    response = render(request, 'errors/error_403.html', {'code': err_code}, context)
+    response.status_code = 403
+    return response
+    # return render(request, 'errors/error_404.html')
+
+# def error_404(request, exception):
+def error_404(request): # TODO :: change it back
+    context = RequestContext(request)
+    err_code = 404
+    response = render(request, 'errors/error_404.html', {'code': err_code}, context)
+    response.status_code = 404
+    return response
+    # return render(request, 'errors/error_404.html')
+
+# def error_500(request, exception):
+def error_500(request): # TODO :: change it back
+    context = RequestContext(request)
+    err_code = 500
+    response = render(request, 'errors/error_500.html', {'code': err_code}, context)
+    response.status_code = 500
+    return response
+    # return render(request, 'errors/error_404.html')
 
 
 ############################################################

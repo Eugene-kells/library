@@ -1,5 +1,6 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import (UserCreationForm, UserChangeForm, AuthenticationForm,
+                                       PasswordChangeForm)
 
 from . import models
 
@@ -11,13 +12,13 @@ class AuthorForm(forms.ModelForm):
 
         fields = ('first_name', 'last_name', 'birth_date', 'biography', 'photo')
 
-        widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'authorinputclass'}),
-            'last_name': forms.TextInput(attrs={'class': 'authorinputclass'}),
-            # 'birth_date': forms.DateField()
-            'biography': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
-            # 'photo': forms.ImageField(),
-        }
+        # widgets = {
+        #     'first_name': forms.TextInput(attrs={'class': 'authorinputclass'}),
+        #     'last_name': forms.TextInput(attrs={'class': 'authorinputclass'}),
+        #     # 'birth_date': forms.DateField()
+        #     'biography': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
+        #     # 'photo': forms.ImageField(),
+        # }
 
 class BookForm(forms.ModelForm):
 
@@ -26,10 +27,10 @@ class BookForm(forms.ModelForm):
 
         fields = ('title', 'release_date', 'author', 'description', 'cover')
 
-        widgets = {
-            'title': forms.TextInput(attrs={'class': 'bookinputclass'}),
-            'description': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
-        }
+        # widgets = {
+        #     'title': forms.TextInput(attrs={'class': 'bookinputclass'}),
+        #     'description': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
+        # }
 
 class CommentForm(forms.ModelForm):
 
@@ -38,21 +39,22 @@ class CommentForm(forms.ModelForm):
 
         fields = ('text',)
 
-        widgets = {
-            'text': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
-        }
+        # widgets = {
+        #     'text': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
+        # }
 
 class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = models.CustomUser
 
-        fields = ('username', 'first_name', 'last_name', 'email', 'status', 'description', 'photo')
+        # fields = ('username', 'first_name', 'last_name', 'email', 'status', 'description', 'photo')
+        fields = ('username', 'email')
         # fields = '__all__'
 
-        widgets = {
-            'description': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
-        }
+        # widgets = {
+        #     'description': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
+        # }
 
 class CustomUserUpdateForm(UserChangeForm):
 
@@ -62,6 +64,23 @@ class CustomUserUpdateForm(UserChangeForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'status', 'description', 'photo')
         # fields = '__all__'
 
-        widgets = {
-            'description': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
-        }
+        # widgets = {
+        #     'description': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
+        # }
+
+class CustomUserLoginForm(AuthenticationForm):
+
+    class Meta:
+
+        fields = '__all__'
+
+        # widgets = {
+        #     'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter username'}),
+        #     'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter password'}),
+        # }
+
+class CustomUserChangePassword(PasswordChangeForm):
+
+    class Meta:
+
+        fields = '__all__'

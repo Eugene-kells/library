@@ -1,0 +1,35 @@
+{% extends 'libraryapp/base.html' %}
+
+{% block content %}
+
+
+<div class="userdetailbox">
+
+  {% if customuser.photo %}
+  <img src="{{ customuser.photo.url }}">
+  {% endif %}
+  <div class="username">{{ customuser.username }}</div>
+  <p></p>
+  {% if customuser.first_name %}
+  <div class="names">{{ customuser.first_name }}
+  {% endif %}
+  {% if customuser.last_name %}
+  {{ customuser.last_name }}</div>
+  {% endif %}
+  <p></p>
+  {% if customuser.status %}
+  <div class="status">{{ customuser.status }}</div>
+  {% endif %}
+  <p></p>
+  {% if customuser.description %}
+  <div class="description">{{ customuser.description }}</div>
+  {% endif %}
+  <p></p>
+
+  {% if request.user.pk == customuser.pk %}
+  <a href="{% url 'user_update' pk=request.user.pk %}"><button type="button">Edit</button></a>
+  {% endif %}
+
+</div>
+
+{% endblock %}

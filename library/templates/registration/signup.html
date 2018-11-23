@@ -1,0 +1,13 @@
+{% extends 'libraryapp/base.html' %}
+
+{% block content %}
+
+
+<form class="signupbox" method="post">
+  <h1>Sign Up</h1>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Sign Up"></input>
+</form>
+
+{% endblock %}

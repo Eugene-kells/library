@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Library</title>
+
+
+</head>
+<body>
+
+    <div class="search-box">
+      <input class="search-txt" type="text" name="" placeholder="Search...">
+      <a class="search-btn" href="#">
+        <i class="fas fa-search"></i>
+      </a>
+    </div>
+
+    <div class="side">
+      <a href="{% url 'about' %}" style="background:#F57C00;">
+        <i class="fas fa-question"></i> Library
+      </a>
+      <a href="{% url 'book_list' %}" style="background:#E64A19;">
+        <i class="fas fa-book"></i> Books
+      </a>
+      <a href="{% url 'author_list' %}" style="background:#D32F2F;">
+        <i class="fas fa-users"></i></i> Authors
+      </a>
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'user' pk=user.pk %}" style="background:#C2185B;">
+        <i class="far fa-user"></i> Profile
+      </a>
+      <a href="{% url 'logout' %}" style="background:#C2185B;">
+        <i class="fas fa-sign-out-alt"></i> Log Out
+      </a>
+      {% else %}
+      <a href="{% url 'signup' %}" style="background:#7B1FA2;">
+        <i class="fas fa-user-plus"></i> Sign Up
+      </a>
+      <a href="{% url 'login' %}?next={{ request.path }}" style="background:#512DA8;">
+        <i class="fas fa-sign-in-alt"></i> Log In
+      </a>
+      {% endif %}
+      <a href="https://github.com/Eugene-kells/library" style="background:#303F9F;" target="_blank">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+    </div>
+
+      {% block content %}
+      {% endblock %}
+
+    <!-- download all necessary scripts -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Chakra+Petch|Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+</body>
+</html>
