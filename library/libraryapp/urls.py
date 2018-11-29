@@ -8,16 +8,16 @@ urlpatterns = [
     path('books/', views.BookListView.as_view(), name='book_list'),
     path('book/<int:pk>/', views.BookDetailView.as_view(), name='book_detail'),
     path('book/new/', views.BookCreateView.as_view(), name='book_new'),
-    path('book/<int:pk>/update/', views.BookUpdateView.as_view(), name='book_update'),
+    path('book/update/<int:pk>/', views.BookUpdateView.as_view(), name='book_update'),
     # book-comment block
     path('book/<int:pk>/comment/', views.add_comment_to_book, name='add_comment_to_book'),
     # comment block
-    path('comment/<int:pk>/remove/', views.remove_comment, name='remove_comment'),
+    path('comment/remove/<int:pk>/', views.remove_comment, name='remove_comment'),
     # author block
     path('authors/', views.AuthorListView.as_view(), name='author_list'),
     path('author/<int:pk>/', views.AuthorDetailView.as_view(), name='author_detail'),
     path('author/new/', views.AuthorCreateView.as_view(), name='author_new'),
-    path('author/<int:pk>/update/', views.AuthorUpdateView.as_view(), name='author_update'),
+    path('author/update/<int:pk>/', views.AuthorUpdateView.as_view(), name='author_update'),
     # authentication block TODO :: make a different app for that
     path('login/', views.UserLoginView.as_view(), name='login'), # here I redefine one instance of next line (included)
     # need to consider another variant later

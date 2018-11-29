@@ -1,10 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'libraryapp/base.html' %}
 
-</body>
-</html>
+{% block content %}
+
+
+<div class="listbox">
+
+    {% for book in object_list %}
+
+    <div class="listitem">
+
+      <div class="listimage">
+      {% if book.cover %}
+        <!-- {{ author.photo }} -->
+        <a href="{{ book.cover.url }}"><img src="{{ book.cover.url }}"></a>
+      {% endif %}
+      </div>
+
+
+      <h1>
+      <a href="{% url 'book_detail' pk=book.pk %}">
+      {{ book.title }}
+      </a>
+      </h1>
+
+      <h2>
+      Author: <i><a href="{% url 'author_detail' pk=book.author.pk %}">{{ book.author }}</a></i>
+      </h2>
+
+      <h2>
+        {% if book.release_date %}
+          Released: <i>{{ book.release_date }}</i>
+        {% endif %}
+      </h2>
+
+
+    </div>
+
+
+    {% endfor %}
+
+</div>
+
+
+
+{% endblock %}

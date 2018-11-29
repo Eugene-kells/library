@@ -16,6 +16,9 @@ class Author(models.Model):
     last_name = models.CharField(max_length=256, blank=False, null=False)
     biography = models.TextField(blank=True, null=True)
     birth_date = models.DateField(blank=True, null=True)
+    death_date = models.DateField(blank=True, null=True)
+    birth_place = models.CharField(max_length=256, blank=True, null=True)
+    death_place = models.CharField(max_length=256, blank=True, null=True)
     photo = models.ImageField(upload_to='authors', blank=True, null=True)
 
     def __str__(self):
