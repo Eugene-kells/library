@@ -1,3 +1,6 @@
+/* ########################################################## */
+/* list of users or books */
+
 .listbox{
   position: absolute;
   top: 12%;
@@ -54,8 +57,18 @@
   font-weight: 500;
 }
 
+.listbox h1{
+    color: #ffeaa7;
+}
+
 .listbox h2{
   font-size: 0.9em;
+  color: #fd79a8;
+}
+
+.listbox .listitem h3{
+  font-size: 0.8em;
+  font-weight: 500;
 }
 
 .listbox a{
@@ -65,4 +78,71 @@
 
 .listbox a:visited{
   color: inherit;
+}
+
+.listbox button{
+  position: relative;
+  /* top: 10%; */
+  /* right: 5%; */
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 1px solid #00b894;
+  padding: 14px 40px;
+  width: 250px;
+  outline: none;
+  color: #dfe6e9;
+  border-radius: 24px;
+  transition: 0.25s;
+  cursor: pointer;
+  font-size: 1.1em;
+}
+
+.listbox button:hover{
+  background: #00b894;
+  color: #191919;
+}
+
+
+/* ########################################################## */
+/* detail view for author */
+
+.author_names{
+  color: #0984e3;
+  font-size: 1.2em;
+}
+
+/* ########################################################## */
+/* about page */
+
+.about{
+  position: absolute;
+  transform: translate(-50%, 0);
+  top: 10%;
+  left: 47%;
+}
+
+.about h1, h2, h3, h4{
+  font-size: 1.7em;
+  font-family: 'Raleway', sans-serif;
+  text-align: center;
+  font-weight: 500;
+  color: #55efc4;
+}
+
+.about h2{
+  font-size: 1.5em;
+  color: #81ecec;
+}
+
+.about h3{
+  font-size: 1.3em;
+  color: #74b9ff;
+}
+
+.about h4{
+  font-size: 1.1em;
+  color: #a29bfe;
 }

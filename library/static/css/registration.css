@@ -322,18 +322,42 @@
   color: #00b894;
 }
 
-.userupdatebox ul .errorlist li{
+.userupdatebox .errorlist li{
   color: #d63031;
+  text-align: justify;
   text-align: justify;
 }
 
 .userupdatebox .helptext{
   font-style: italic;
   color: #00b894;
+  text-align: justify;
+}
+
+.userupdatebox select{
+  appearance: none;
+  border: 0;
+  background: none;
+  /* border-radius: 50%; */
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 1px solid #0984e3;
+  padding: 14px 10px;
+  width: 300px;
+  outline: none;
+  color: #dfe6e9;
+  border-radius: 24px;
+  transition: 0.25s;
+  font-size: 1.2em;
+}
+
+.userupdatebox select:hover{
+  color: #2d3436;
 }
 
 /* ########################################################## */
-/* detail view */
+/* detail view for user */
 .userdetailbox{
   position: absolute;
   margin: 0;
@@ -359,6 +383,12 @@
   height: auto;
   max-width: 500px;
   max-height: 300px;
+  border-radius: 12px;
+  transition: transform 0.2s;
+}
+
+.userdetailbox img:hover{
+  transform: scale(2.0);
 }
 
 .userdetailbox .username{
@@ -400,12 +430,21 @@
 }
 
 .userdetailbox a{
+  color: #00cec9;
   text-decoration: none;
+}
+
+.userdetailbox a:visited{
+  color: #00cec9;
 }
 
 .userdetailbox a button:hover{
   background: #fdcb6e;
   color: #191919;
+}
+
+.description_header{
+  color: #fdcb6e;
 }
 
 /* ########################################################## */

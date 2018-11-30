@@ -7,6 +7,7 @@ class CustomUser(AbstractUser):
     status = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     photo = models.ImageField(upload_to='users', blank=True, null=True)
+    books = models.ManyToManyField('Book', blank=True)
 
     def __str__(self):
         return self.username
@@ -30,8 +31,8 @@ class Book(models.Model):
     release_date = models.DateField(blank=True, null=True)
     # raiting = models.FloatField(blank=True, null=False, default=0)
     cover = models.ImageField(upload_to='books', blank=True, null=True)
-    author = models.ForeignKey(Author, on_delete=models.SET_NULL, blank=False, null=True)
-    reader = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
+    author = models.ForeignKey('Author', on_delete=models.SET_NULL, blank=False, null=True)
+    # reader = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
 
     def __str__(self):
         return self.title

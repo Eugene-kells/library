@@ -10,15 +10,9 @@ class AuthorForm(forms.ModelForm):
     class Meta:
         model = models.Author
 
-        fields = ('first_name', 'last_name', 'birth_date', 'biography', 'photo')
+        fields = ('first_name', 'last_name', 'birth_date', 'birth_place',
+                  'death_date', 'death_place', 'biography', 'photo')
 
-        # widgets = {
-        #     'first_name': forms.TextInput(attrs={'class': 'authorinputclass'}),
-        #     'last_name': forms.TextInput(attrs={'class': 'authorinputclass'}),
-        #     # 'birth_date': forms.DateField()
-        #     'biography': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
-        #     # 'photo': forms.ImageField(),
-        # }
 
 class BookForm(forms.ModelForm):
 
@@ -27,10 +21,6 @@ class BookForm(forms.ModelForm):
 
         fields = ('title', 'release_date', 'author', 'description', 'cover')
 
-        # widgets = {
-        #     'title': forms.TextInput(attrs={'class': 'bookinputclass'}),
-        #     'description': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
-        # }
 
 class CommentForm(forms.ModelForm):
 
@@ -39,9 +29,6 @@ class CommentForm(forms.ModelForm):
 
         fields = ('text',)
 
-        # widgets = {
-        #     'text': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
-        # }
 
 class CustomUserCreationForm(UserCreationForm):
 
@@ -52,9 +39,6 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ('username', 'email')
         # fields = '__all__'
 
-        # widgets = {
-        #     'description': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
-        # }
 
 class CustomUserUpdateForm(UserChangeForm):
 
@@ -64,9 +48,6 @@ class CustomUserUpdateForm(UserChangeForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'status', 'description', 'photo')
         # fields = '__all__'
 
-        # widgets = {
-        #     'description': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
-        # }
 
 class CustomUserLoginForm(AuthenticationForm):
 
@@ -74,10 +55,6 @@ class CustomUserLoginForm(AuthenticationForm):
 
         fields = '__all__'
 
-        # widgets = {
-        #     'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter username'}),
-        #     'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter password'}),
-        # }
 
 class CustomUserChangePassword(PasswordChangeForm):
 

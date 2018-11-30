@@ -5,47 +5,53 @@
 
 <div class="listbox">
 
-    {% for author in object_list %}
+  <h1>Authors</h1>
 
-    <div class="listitem">
+  {% if request.user.is_authenticated %}
+    <a href="{% url 'author_new' %}"><button type="button">Add author</button></a>
+  {% endif %}
 
-      <div class="listimage">
-      {% if author.photo %}
-        <!-- {{ author.photo }} -->
-        <a href="{{ author.photo.url }}"><img src="{{ author.photo.url }}"></a>
-      {% endif %}
-      </div>
+  {% for author in object_list %}
 
+  <div class="listitem">
 
-      <h1>
-      <a href="{% url 'author_detail' pk=author.pk %}">
-      {{ author.first_name }}
-      {{ author.last_name }}
-      </a>
-      </h1>
-
-      <h2>
-        {% if author.birth_date %}
-          Birth: <i>{{ author.birth_date }}</i>
-          {% if author.birth_place %}
-            <i>, {{ author.birth_place }}</i>
-          {% endif %}
-        {% endif %}
-      </h2>
-      <h2>
-        {% if author.death_date %}
-          Death: <i>{{ author.death_date }}</i>
-          {% if author.death_place %}
-            <i>, {{ author.death_place }}</i>
-          {% endif %}
-        {% endif %}
-      </h2>
-
+    <div class="listimage">
+    {% if author.photo %}
+      <!-- {{ author.photo }} -->
+      <a href="{{ author.photo.url }}"><img src="{{ author.photo.url }}"></a>
+    {% endif %}
     </div>
 
-    {% endfor %}
+
+    <h1>
+    <a href="{% url 'author_detail' pk=author.pk %}">
+    {{ author.first_name }}
+    {{ author.last_name }}
+    </a>
+    </h1>
+
+    <h2>
+      {% if author.birth_date %}
+        Birth: <i>{{ author.birth_date }}</i>
+        {% if author.birth_place %}
+          <i>, {{ author.birth_place }}</i>
+        {% endif %}
+      {% endif %}
+    </h2>
+    <h2>
+      {% if author.death_date %}
+        Death: <i>{{ author.death_date }}</i>
+        {% if author.death_place %}
+          <i>, {{ author.death_place }}</i>
+        {% endif %}
+      {% endif %}
+    </h2>
 
   </div>
+
+  {% endfor %}
+
+</div>
 
 
 {% endblock %}

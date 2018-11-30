@@ -9,6 +9,9 @@ urlpatterns = [
     path('book/<int:pk>/', views.BookDetailView.as_view(), name='book_detail'),
     path('book/new/', views.BookCreateView.as_view(), name='book_new'),
     path('book/update/<int:pk>/', views.BookUpdateView.as_view(), name='book_update'),
+    # book-user block  | shouldn't do this as POST?
+    path('book/add/<int:pk>/', views.add_book, name='add_user_book'),
+    path('book/delete/<int:pk>/', views.delete_book, name='delete_user_book'),
     # book-comment block
     path('book/<int:pk>/comment/', views.add_comment_to_book, name='add_comment_to_book'),
     # comment block

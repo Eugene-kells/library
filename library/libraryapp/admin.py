@@ -20,7 +20,7 @@ class CustomUserAdmin(UserAdmin):
         (
           None,
           {
-              'fields': ('status', 'description', 'photo'),
+              'fields': ('status', 'description', 'photo', 'books'),
           }
         ),
     )

@@ -11,6 +11,7 @@ from django.template import RequestContext
 
 from . import models, forms
 
+
 #############################################################
 # about this site view block
 class AboutView(TemplateView):
@@ -42,25 +43,28 @@ class BookCreateView(LoginRequiredMixin, CreateView):
     template_name = 'libraryapp/book_create.html'
 
     login_url = '/login/'
-    # success_url = 'libraryapp/book_detail.html'
-    success_url = reverse_lazy('book_detail', kwargs={'pk': model.pk})
+
+    def get_success_url(self):
+        return reverse_lazy('book_detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        book = form.save()
-        return reverse_lazy('libraryapp:book_detail', kwargs={'pk': book.pk})
+        book = form.save() # here is some problem
+        return super(BookCreateView, self).form_valid(form)
 
 
 class BookUpdateView(LoginRequiredMixin, UpdateView):
-    models = models.Book
+    model = models.Book
     form_class = forms.BookForm
     template_name = 'libraryapp/book_update.html'
 
     login_url = '/login/'
-    # success_url = 'libraryapp/book_detail.html'
+
+    def get_success_url(self):
+        return reverse_lazy('book_detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        book = form.save()
-        return reverse_lazy('libraryapp:book_detail', kwargs={'pk': book.pk})
+        book = form.save() # here is some problem
+        return super(BookUpdateView, self).form_valid(form)
 
 
 #############################################################
@@ -80,6 +84,11 @@ class AuthorDetailView(DetailView):
     model = models.Author
     template_name = 'libraryapp/author_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['books'] = models.Book.objects.filter(author=self.object.pk).values()
+        return context
+
 
 class AuthorCreateView(LoginRequiredMixin, CreateView):
     model = models.Author
@@ -87,11 +96,13 @@ class AuthorCreateView(LoginRequiredMixin, CreateView):
     template_name = 'libraryapp/author_create.html'
 
     login_url = '/login/'
-    # success_url = 'libraryapp/author_detail.html'
+
+    def get_success_url(self):
+        return reverse_lazy('author_detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        author = form.save()
-        return reverse_lazy('libraryapp:author_detail', kwargs={'pk': author.pk})
+        author = form.save() # here is some problem
+        return super(AuthorCreateView, self).form_valid(form)
 
 
 class AuthorUpdateView(LoginRequiredMixin, UpdateView):
@@ -100,12 +111,13 @@ class AuthorUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'libraryapp/author_update.html'
 
     login_url = '/login/'
-    # redirect_field_name = 'libraryapp/author_detail.html'
-    # success_url = 'libraryapp/author_detail.html'
+
+    def get_success_url(self):
+        return reverse_lazy('author_detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        author = form.save()
-        return reverse_lazy('libraryapp:author_detail', kwargs={'pk': author.pk})
+        author = form.save() # here is some problem
+        return super(AuthorUpdateView, self).form_valid(form)
 
 
 #############################################################
@@ -116,7 +128,6 @@ class UserCreateView(CreateView):
     form_class = forms.CustomUserCreationForm
     template_name = 'registration/signup.html'
 
-    # success_url = 'registration/user_detail.html'
     def get_success_url(self):
         return reverse_lazy('user', kwargs={'pk': self.object.pk})
 
@@ -149,6 +160,11 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     model = models.CustomUser
     template_name = 'registration/user_detail.html'
     login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['books'] = self.object.books.all
+        return context
 
 
 
@@ -240,3 +256,22 @@ def remove_comment(request, pk):
     book_pk = comment.book.pk
     comment.delete()
     return redirect('book_detail', pk=book_pk)
+
+
+
+############################################################
+@login_required
+def add_book(request, pk):
+    book = get_object_or_404(models.Book, pk=pk)
+
+    # if request.method == 'POST':
+    request.user.books.add(book)
+    return redirect('book_list')
+
+@login_required
+def delete_book(request, pk):
+    book = get_object_or_404(models.Book, pk=pk)
+
+    # if request.method == 'POST':
+    request.user.books.remove(book)
+    return redirect('book_list')

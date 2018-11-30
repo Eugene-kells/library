@@ -1,0 +1,13 @@
+{% extends 'libraryapp/base.html' %}
+
+{% block content %}
+
+
+<form class="userupdatebox" method="post" enctype="multipart/form-data">
+  <h1>Book</h1>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Create"></input>
+</form>
+
+{% endblock %}

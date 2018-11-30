@@ -1,0 +1,56 @@
+{% extends 'libraryapp/base.html' %}
+
+{% block content %}
+
+
+<div class="userdetailbox">
+
+  {% if book.cover %}
+  <a href="{{ book.cover.url }}"><img src="{{ book.cover.url }}"></a>
+  {% endif %}
+
+
+  <div class="username">
+      {{ book.title }}
+  </div>
+
+  <div class="names">
+    <a href="{% url 'author_detail' pk=book.author.pk %}">
+      {{ book.author.first_name}} {{ book.author.last_name }}
+    </a>
+  </div>
+
+  <p></p>
+
+  <div class="author_names">
+    {% if book.release_date %}
+      Release: <i>{{ book.release_date }}</i>
+    {% endif %}
+  </div>
+
+
+  <p></p>
+
+  <h2 class="description_header">About book:</h2>
+
+  <p></p>
+
+  {% if book.description %}
+  <div class="description">
+    {{ book.description }}
+  </div>
+  {% endif %}
+
+  <p></p>
+
+  {% if request.user.is_authenticated %}
+  <a href="{% url 'book_update' pk=book.pk %}">
+    <button type="button">
+      Edit
+    </button>
+  </a>
+  {% endif %}
+
+</div>
+
+{% endblock %}

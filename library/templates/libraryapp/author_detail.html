@@ -1,0 +1,75 @@
+{% extends 'libraryapp/base.html' %}
+
+{% block content %}
+
+
+<div class="userdetailbox">
+
+  {% if author.photo %}
+  <a href="{{ author.photo.url }}"><img src="{{ author.photo.url }}"></a>
+  {% endif %}
+
+
+  <div class="username">
+      {{ author.first_name }}
+      {{ author.last_name }}
+  </div>
+
+  <p></p>
+
+  <div class="author_names">
+    {% if author.birth_date %}
+      Birth: <i>{{ author.birth_date }}</i>
+      {% if author.birth_place %}
+        <i>, {{ author.birth_place }}</i>
+      {% endif %}
+    {% endif %}
+    <br>
+    {% if author.death_date %}
+      Death: <i>{{ author.death_date }}</i>
+      {% if author.death_place %}
+        <i>, {{ author.death_place }}</i>
+      {% endif %}
+    {% endif %}
+  </div>
+
+
+  <p></p>
+
+  <h2 class="description_header">Biography:</h2>
+
+  <p></p>
+
+  {% if author.biography %}
+  <div class="description">
+    {{ author.biography }}
+  </div>
+  {% endif %}
+
+  <p></p>
+
+  <div class="username">
+    Author books:
+  </div>
+  <div class="names">
+    {% for book in books %}
+      <a href="{% url 'book_detail' pk=book.id %}">
+        {{ book.title }}
+      </a>
+      <br>
+    {% endfor%}
+  </div>
+
+  <p></p>
+
+  {% if request.user.is_authenticated %}
+  <a href="{% url 'author_update' pk=author.pk %}">
+    <button type="button">
+      Edit
+    </button>
+  </a>
+  {% endif %}
+
+</div>
+
+{% endblock %}

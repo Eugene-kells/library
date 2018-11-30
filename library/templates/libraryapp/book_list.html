@@ -5,37 +5,59 @@
 
 <div class="listbox">
 
+  <h1>Books</h1>
+
+  {% if request.user.is_authenticated %}
+    <a href="{% url 'book_new' %}"><button type="button">Add book</button></a>
+  {% endif %}
+
     {% for book in object_list %}
 
-    <div class="listitem">
+      <div class="listitem">
 
-      <div class="listimage">
-      {% if book.cover %}
-        <!-- {{ author.photo }} -->
-        <a href="{{ book.cover.url }}"><img src="{{ book.cover.url }}"></a>
-      {% endif %}
-      </div>
-
-
-      <h1>
-      <a href="{% url 'book_detail' pk=book.pk %}">
-      {{ book.title }}
-      </a>
-      </h1>
-
-      <h2>
-      Author: <i><a href="{% url 'author_detail' pk=book.author.pk %}">{{ book.author }}</a></i>
-      </h2>
-
-      <h2>
-        {% if book.release_date %}
-          Released: <i>{{ book.release_date }}</i>
+        <div class="listimage">
+        {% if book.cover %}
+          <!-- {{ author.photo }} -->
+          <a href="{{ book.cover.url }}"><img src="{{ book.cover.url }}"></a>
         {% endif %}
-      </h2>
+        </div>
 
 
-    </div>
+        <h1>
+        <a href="{% url 'book_detail' pk=book.pk %}">
+        {{ book.title }}
+        </a>
+        </h1>
 
+        <h2>
+        Author: <i><a href="{% url 'author_detail' pk=book.author.pk %}">{{ book.author }}</a></i>
+        </h2>
+
+        <h2>
+          {% if book.release_date %}
+            Released: <i>{{ book.release_date }}</i>
+          {% endif %}
+        </h2>
+
+        <p></p>
+
+          {% if request.user.is_authenticated %}
+            {% if book in request.user.books.all %}
+            <a href="{% url 'delete_user_book' pk=book.pk %}">
+              <h3 style="color:#d63031;">
+                Remove this book from your books
+              </h3>
+            </a>
+            {% else %}
+            <a href="{% url 'add_user_book' pk=book.pk %}">
+              <h3 style="color:#55efc4;">
+                Add this book to your books
+              </h3>
+            </a>
+            {% endif %}
+          {% endif %}
+
+      </div>
 
     {% endfor %}
 
