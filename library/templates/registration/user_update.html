@@ -3,13 +3,13 @@
 {% block content %}
 
 
-<form class="userupdatebox" method="post">
+<form class="userupdatebox" method="post" enctype="multipart/form-data">
   <h1>Profile</h1>
   {% csrf_token %}
   {{ form.as_p }}
   <p class="warning">Your password exists! We will remove message above soon!</p>
   <p class="warning">Do not use link above! Use button below!</p>
-  <a href="{% url 'change_password' pk=request.user.pk %}"><button type="button">Change password</button></a>
+  <a href="{% url 'change_password' %}"><button type="button">Change password</button></a>
   <input type="submit" value="Update"></input>
 </form>
 

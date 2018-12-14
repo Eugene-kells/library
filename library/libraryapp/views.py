@@ -1,4 +1,5 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, AccessMixin
+from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.decorators import login_required
 from django.views.generic import (TemplateView, ListView,
                                   DetailView, CreateView,
@@ -10,6 +11,22 @@ from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.template import RequestContext
 
 from . import models, forms
+
+
+#############################################################
+# custom mixin for checking if user log out
+class LogoutRequiredMixin(AccessMixin):
+
+    def get_login_url(self):
+        return reverse_lazy('user', kwargs={'pk': self.request.user.pk})
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Checks if user is not authenticated.
+        """
+        if request.user.is_authenticated:
+            return redirect_to_login('', self.get_login_url()) # should check for alternative for '' ?
+        return super(LogoutRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 
 #############################################################
@@ -123,10 +140,11 @@ class AuthorUpdateView(LoginRequiredMixin, UpdateView):
 #############################################################
 # user authentication block
 
-class UserCreateView(CreateView):
+class UserCreateView(LogoutRequiredMixin, CreateView):
     model = models.CustomUser
     form_class = forms.CustomUserCreationForm
     template_name = 'registration/signup.html'
+
 
     def get_success_url(self):
         return reverse_lazy('user', kwargs={'pk': self.object.pk})
@@ -136,7 +154,7 @@ class UserCreateView(CreateView):
         return super(UserCreateView, self).form_valid(form)
 
 
-class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = models.CustomUser
     form_class = forms.CustomUserUpdateForm
     template_name = 'registration/user_update.html'
@@ -144,16 +162,17 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     login_url = '/login/'
 
 
-    def get_success_url(self):
-        return reverse_lazy('user', kwargs={'pk': self.object.pk})
+    # get the account of this user
+    def get_object(self, queryset=None):
+        return models.CustomUser.objects.get(pk=self.request.user.pk)
 
+    def get_success_url(self):
+        return reverse_lazy('user', kwargs={'pk': self.request.user.pk})
+
+    # send the data to the db via post
     def form_valid(self, form):
         user = form.save() # here is some problem
         return super(UserUpdateView, self).form_valid(form)
-
-    # check if this user is owner of the form they want to access
-    def test_func(self):
-        return self.kwargs['pk'] == self.request.user.pk
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
@@ -168,13 +187,18 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
 
 
-class UserLoginView(LoginView):
+class UserLoginView(LogoutRequiredMixin, LoginView):
     form_class =forms.CustomUserLoginForm
     template_name = 'registration/login.html'
 
+    # login_url = 'books'
+
+    # def get_login_url(self):
+    #     return reverse_lazy('user', kwargs={'pk': self.request.user.pk })
 
 
-class UserChangePasswordView(LoginRequiredMixin, UserPassesTestMixin, PasswordChangeView):
+
+class UserChangePasswordView(LoginRequiredMixin, PasswordChangeView):
     form_class = forms.CustomUserChangePassword
     template_name = 'registration/change_password.html'
 
@@ -188,9 +212,9 @@ class UserChangePasswordView(LoginRequiredMixin, UserPassesTestMixin, PasswordCh
         user = form.save()
         return super(UserChangePasswordView, self).form_valid(form)
 
-    # check if this user is owner of the form they want to access
-    def test_func(self):
-        return self.kwargs['pk'] == self.request.user.pk
+    # # check if this user is owner of the form they want to access
+    # def test_func(self):
+    #     return self.kwargs['pk'] == self.request.user.pk
 
 
 ############################################################

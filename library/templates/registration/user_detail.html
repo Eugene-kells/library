@@ -57,7 +57,7 @@
   <p></p>
 
   {% if request.user.pk == customuser.pk %}
-  <a href="{% url 'user_update' pk=request.user.pk %}">
+  <a href="{% url 'user_update' %}">
     <button type="button">
       Edit
     </button>
