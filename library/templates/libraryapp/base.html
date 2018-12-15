@@ -10,6 +10,14 @@
 </head>
 <body>
 
+  {% if messages %}
+    <ul class="top_messages">
+      {% for message in messages %}
+        <li class="message {{ message.tags }}" id="top_message">{{ message }} <i class="fas fa-times close-btn" onclick="closemessage()"></i></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
     <div class="search-box">
       <input class="search-txt" type="text" name="" placeholder="Search...">
       <a class="search-btn" href="#">
@@ -51,6 +59,7 @@
       {% endblock %}
 
     <!-- download all necessary scripts -->
+    <script src="{% static 'js/app.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/registration.css' %}">
     <link rel="stylesheet" href="{% static 'css/app.css' %}">

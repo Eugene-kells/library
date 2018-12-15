@@ -10,6 +10,8 @@
   <p class="warning">Your password exists! We will remove message above soon!</p>
   <p class="warning">Do not use link above! Use button below!</p>
   <a href="{% url 'change_password' %}"><button type="button">Change password</button></a>
+  <a href="{% url 'user_delete' %}"><button type="button">Delete account</button></a>
+  <p class="warning">Warning! This operation can't be undone!</p>
   <input type="submit" value="Update"></input>
 </form>
 

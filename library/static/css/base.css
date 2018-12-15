@@ -86,3 +86,38 @@ body{
 .search-txt::placeholder{
   color: #b2bec3;
 }
+
+.top_messages{
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-size: 1.3em;
+  list-style-type: none;
+  z-index: 1;
+  /* display: block; */
+}
+
+.top_messages .message{
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  height: auto;
+  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+  background: #ffeaa7;
+}
+
+.top_messages .close-btn{
+  cursor: pointer;
+}
+
+.top_messages .success{
+  background: #00b894;
+}
+
+.top_messages .error{
+  background: #e17055
+}

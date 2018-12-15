@@ -1,6 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, AccessMixin
 from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.db import transaction
 from django.views.generic import (TemplateView, ListView,
                                   DetailView, CreateView,
                                   UpdateView)
@@ -65,8 +67,9 @@ class BookCreateView(LoginRequiredMixin, CreateView):
         return reverse_lazy('book_detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        book = form.save() # here is some problem
-        return super(BookCreateView, self).form_valid(form)
+        with transaction.atomic():
+            book = form.save() # here is some problem
+            return super(BookCreateView, self).form_valid(form)
 
 
 class BookUpdateView(LoginRequiredMixin, UpdateView):
@@ -80,8 +83,9 @@ class BookUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('book_detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        book = form.save() # here is some problem
-        return super(BookUpdateView, self).form_valid(form)
+        with transaction.atomic():
+            book = form.save() # here is some problem
+            return super(BookUpdateView, self).form_valid(form)
 
 
 #############################################################
@@ -118,8 +122,9 @@ class AuthorCreateView(LoginRequiredMixin, CreateView):
         return reverse_lazy('author_detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        author = form.save() # here is some problem
-        return super(AuthorCreateView, self).form_valid(form)
+        with transaction.atomic():
+            author = form.save() # here is some problem
+            return super(AuthorCreateView, self).form_valid(form)
 
 
 class AuthorUpdateView(LoginRequiredMixin, UpdateView):
@@ -133,8 +138,9 @@ class AuthorUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('author_detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        author = form.save() # here is some problem
-        return super(AuthorUpdateView, self).form_valid(form)
+        with transaction.atomic():
+            author = form.save() # here is some problem
+            return super(AuthorUpdateView, self).form_valid(form)
 
 
 #############################################################
@@ -150,8 +156,9 @@ class UserCreateView(LogoutRequiredMixin, CreateView):
         return reverse_lazy('user', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        user = form.save()
-        return super(UserCreateView, self).form_valid(form)
+        with transaction.atomic():
+            user = form.save()
+            return super(UserCreateView, self).form_valid(form)
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
@@ -171,8 +178,9 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     # send the data to the db via post
     def form_valid(self, form):
-        user = form.save() # here is some problem
-        return super(UserUpdateView, self).form_valid(form)
+        with transaction.atomic():
+            user = form.save() # here is some problem
+            return super(UserUpdateView, self).form_valid(form)
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
@@ -188,7 +196,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
 
 class UserLoginView(LogoutRequiredMixin, LoginView):
-    form_class =forms.CustomUserLoginForm
+    form_class = forms.CustomUserLoginForm
     template_name = 'registration/login.html'
 
     # login_url = 'books'
@@ -209,12 +217,21 @@ class UserChangePasswordView(LoginRequiredMixin, PasswordChangeView):
         return reverse_lazy('about')
 
     def form_valid(self, form):
-        user = form.save()
-        return super(UserChangePasswordView, self).form_valid(form)
+        with transaction.atomic():
+            user = form.save()
+            return super(UserChangePasswordView, self).form_valid(form)
 
     # # check if this user is owner of the form they want to access
     # def test_func(self):
     #     return self.kwargs['pk'] == self.request.user.pk
+
+@login_required
+def user_delete(request):
+    with transaction.atomic():
+        u = models.CustomUser.objects.get(pk=request.user.pk)
+        u.delete()
+    messages.error(request, 'User was deleted.')
+    return redirect('about')
 
 
 ############################################################

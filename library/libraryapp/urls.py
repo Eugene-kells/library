@@ -29,6 +29,7 @@ urlpatterns = [
     path('user/<int:pk>/', views.UserDetailView.as_view(), name='user'),
     path('user/chngpswd/', views.UserChangePasswordView.as_view(), name='change_password'),
     path('user/update/', views.UserUpdateView.as_view(), name='user_update'),
+    path('user/delete/', views.user_delete, name='user_delete'),
     # error block (it shouldnt be here)
     # path('400/', views.error_400, name='error400'),
     # path('403/', views.error_403, name='error403'),
