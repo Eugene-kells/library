@@ -50,15 +50,15 @@ class CustomUserUpdateForm(UserChangeForm):
         # fields = '__all__'
 
 
-class CustomUserLoginForm(AuthenticationForm):
+# class CustomUserLoginForm(AuthenticationForm):
+#
+#     class Meta:
+#
+#         fields = '__all__'
 
-    class Meta:
 
-        fields = '__all__'
-
-
-class CustomUserChangePassword(PasswordChangeForm):
-
-    class Meta:
-
-        fields = '__all__'
+# class CustomUserChangePassword(PasswordChangeForm):
+#
+#     class Meta:
+#
+#         fields = '__all__'

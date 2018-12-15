@@ -9,4 +9,6 @@ media/
 
 migrations/
 
+sent_emails/
+
 settings.py

@@ -195,35 +195,35 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
 
 
-class UserLoginView(LogoutRequiredMixin, LoginView):
-    form_class = forms.CustomUserLoginForm
-    template_name = 'registration/login.html'
-
-    # login_url = 'books'
-
-    # def get_login_url(self):
-    #     return reverse_lazy('user', kwargs={'pk': self.request.user.pk })
-
-
-
-class UserChangePasswordView(LoginRequiredMixin, PasswordChangeView):
-    form_class = forms.CustomUserChangePassword
-    template_name = 'registration/change_password.html'
-
-    login_url = '/login/'
+# class UserLoginView(LogoutRequiredMixin, LoginView):
+#     form_class = forms.CustomUserLoginForm
+#     template_name = 'registration/login.html'
+#
+#     # login_url = 'books'
+#
+#     # def get_login_url(self):
+#     #     return reverse_lazy('user', kwargs={'pk': self.request.user.pk })
 
 
-    def get_success_url(self):
-        return reverse_lazy('about')
 
-    def form_valid(self, form):
-        with transaction.atomic():
-            user = form.save()
-            return super(UserChangePasswordView, self).form_valid(form)
-
-    # # check if this user is owner of the form they want to access
-    # def test_func(self):
-    #     return self.kwargs['pk'] == self.request.user.pk
+# class UserChangePasswordView(LoginRequiredMixin, PasswordChangeView):
+#     form_class = forms.CustomUserChangePassword
+#     template_name = 'registration/change_password.html'
+#
+#     login_url = '/login/'
+#
+#
+#     def get_success_url(self):
+#         return reverse_lazy('about')
+#
+#     def form_valid(self, form):
+#         with transaction.atomic():
+#             user = form.save()
+#             return super(UserChangePasswordView, self).form_valid(form)
+#
+#     # # check if this user is owner of the form they want to access
+#     # def test_func(self):
+#     #     return self.kwargs['pk'] == self.request.user.pk
 
 @login_required
 def user_delete(request):

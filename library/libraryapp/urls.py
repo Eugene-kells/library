@@ -22,12 +22,13 @@ urlpatterns = [
     path('author/new/', views.AuthorCreateView.as_view(), name='author_new'),
     path('author/update/<int:pk>/', views.AuthorUpdateView.as_view(), name='author_update'),
     # authentication block TODO :: make a different app for that
-    path('login/', views.UserLoginView.as_view(), name='login'), # here I redefine one instance of next line (included)
+    # path('login/', views.UserLoginView.as_view(), name='login'), # here I redefine one instance of url (in auth.urls)
+    # path('user/chngpswd/', views.UserChangePasswordView.as_view(), name='change_password'),
     # need to consider another variant later
+    # this urls includes login, logout, change password and reset password staff
     path('', include('django.contrib.auth.urls')), # login, logout and reset password (default by Django)
     path('signup/', views.UserCreateView.as_view(), name='signup'),
     path('user/<int:pk>/', views.UserDetailView.as_view(), name='user'),
-    path('user/chngpswd/', views.UserChangePasswordView.as_view(), name='change_password'),
     path('user/update/', views.UserUpdateView.as_view(), name='user_update'),
     path('user/delete/', views.user_delete, name='user_delete'),
     # error block (it shouldnt be here)
