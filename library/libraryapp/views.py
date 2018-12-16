@@ -6,10 +6,9 @@ from django.db import transaction
 from django.views.generic import (TemplateView, ListView,
                                   DetailView, CreateView,
                                   UpdateView)
-from django.shortcuts import get_object_or_404, redirect
-from django.shortcuts import render, render_to_response
+from django.shortcuts import get_object_or_404, redirect, render, HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.contrib.auth.views import LoginView, PasswordChangeView
+# from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.template import RequestContext
 
 from . import models, forms
@@ -43,7 +42,7 @@ class BookListView(ListView):
     model = models.Book
     template_name = 'libraryapp/book_list.html'
 
-    paginate_by = 15
+    # paginate_by = 15
     ordering = ['-release_date']
 
     def get_queryset(self):
@@ -53,6 +52,11 @@ class BookListView(ListView):
 class BookDetailView(DetailView):
     model = models.Book
     template_name = 'libraryapp/book_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comments'] = models.Comment.objects.filter(book=self.object.pk).order_by('-date')
+        return context
 
 
 class BookCreateView(LoginRequiredMixin, CreateView):
@@ -87,6 +91,96 @@ class BookUpdateView(LoginRequiredMixin, UpdateView):
             book = form.save() # here is some problem
             return super(BookUpdateView, self).form_valid(form)
 
+#############################################################
+# comments block
+class CommentCreate(LoginRequiredMixin, CreateView):
+    model = models.Comment
+    form_class = forms.CommentForm
+
+    template_name = 'libraryapp/comment_create.html'
+
+    login_url = '/login/'
+
+    def get_success_url(self):
+        return reverse_lazy('book_detail', kwargs={'pk': self.object.book.pk})
+
+    def form_valid(self, form):
+        with transaction.atomic():
+            comment = form.save()
+            return super(CommentCreate, self).form_valid(form)
+
+    # set custom data about user to the form
+    def get_form(self, form_class=None):
+        form_class = self.form_class
+        form = super(CommentCreate, self).get_form(form_class)
+        form.instance.creator = self.request.user
+        form.instance.book = models.Book.objects.get(pk=self.kwargs['book_pk'])
+        return form
+
+
+class ReplyCreate(LoginRequiredMixin, CreateView):
+    model = models.Comment
+    form_class = forms.CommentForm
+
+    template_name = 'libraryapp/comment_create.html'
+
+    login_url = '/login/'
+
+    def get_success_url(self):
+        return reverse_lazy('book_detail', kwargs={'pk': self.object.book.pk})
+
+    def form_valid(self, form):
+        with transaction.atomic():
+            comment = form.save()
+            return super(ReplyCreate, self).form_valid(form)
+
+    # set custom data about user to the form
+    def get_form(self, form_class=None):
+        form_class = self.form_class
+        form = super(ReplyCreate, self).get_form(form_class)
+        form.instance.creator = self.request.user
+        form.instance.book = models.Book.objects.get(pk=self.kwargs['book_pk'])
+        form.instance.parent_comment = models.Comment.objects.get(pk=self.kwargs['reply_pk'])
+        return form
+
+
+class CommentUpdate(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
+    model = models.Comment
+    form_class = forms.CommentForm
+
+    template_name = 'libraryapp/comment_update.html'
+
+    login_url = '/login/'
+
+    def get_success_url(self):
+        return reverse_lazy('book_detail', kwargs={'pk': self.object.book.pk})
+
+    def form_valid(self, form):
+        with transaction.atomic():
+            comment = form.save()
+            return super(CommentUpdate, self).form_valid(form)
+
+    def get_object(self, queryset=None):
+        return models.Comment.objects.get(pk=self.kwargs['pk'])
+        # return models.CustomUser.objects.get(pk=self.request.user.pk)
+
+    # only owner of a post can delete it
+    def test_func(self):
+        comment = models.Comment.objects.get(pk=self.kwargs['pk'])
+        return comment.creator == self.request.user
+
+@login_required
+def comment_delete(request, pk):
+    with transaction.atomic():
+        comment = models.Comment.objects.get(pk=pk)
+        if comment.creator == request.user:
+            comment.delete()
+            messages.success(request, 'Comment was deleted.')
+        else:
+            messages.error(request, 'You don\'t have right to edit this comment')
+    next_url = request.GET.get('next', '/')
+    return HttpResponseRedirect(next_url)
+
 
 #############################################################
 # author block
@@ -94,7 +188,7 @@ class AuthorListView(ListView):
     model = models.Author
     template_name = 'libraryapp/author_list.html'
 
-    paginate_by = 15
+    # paginate_by = 15
     ordering = ['last_name', 'first_name']
 
     def get_queryset(self):
@@ -230,7 +324,7 @@ def user_delete(request):
     with transaction.atomic():
         u = models.CustomUser.objects.get(pk=request.user.pk)
         u.delete()
-    messages.error(request, 'User was deleted.')
+    messages.success(request, 'User was deleted.')
     return redirect('about')
 
 
@@ -275,28 +369,28 @@ def error_500(request): # TODO :: change it back
 
 
 ############################################################
-
-@login_required
-def add_comment_to_book(request, pk):
-    book = get_object_or_404(models.Book, pk=pk)
-
-    if request.method == 'POST':
-        form = forms.CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.book = book
-            comment.save()
-            return redirect('post_detail', pk=book.pk)
-    else:
-        form = forms.CommentForm()
-    return render(request, 'libraryapp/comment_form.html', {'form': form})
-
-@login_required
-def remove_comment(request, pk):
-    comment = get_object_or_404(models.Comment, pk=pk)
-    book_pk = comment.book.pk
-    comment.delete()
-    return redirect('book_detail', pk=book_pk)
+#
+# @login_required
+# def add_comment_to_book(request, pk):
+#     book = get_object_or_404(models.Book, pk=pk)
+#
+#     if request.method == 'POST':
+#         form = forms.CommentForm(request.POST)
+#         if form.is_valid():
+#             comment = form.save(commit=False)
+#             comment.book = book
+#             comment.save()
+#             return redirect('post_detail', pk=book.pk)
+#     else:
+#         form = forms.CommentForm()
+#     return render(request, 'libraryapp/comment_form.html', {'form': form})
+#
+# @login_required
+# def remove_comment(request, pk):
+#     comment = get_object_or_404(models.Comment, pk=pk)
+#     book_pk = comment.book.pk
+#     comment.delete()
+#     return redirect('book_detail', pk=book_pk)
 
 
 

@@ -3,44 +3,79 @@
 
 .listbox{
   position: absolute;
-  top: 12%;
-  left: 47%;
-  width: auto;
-  padding: 80px;
+  top: auto;
+  left: 50%;
+  width: 80%;
+  padding: 5%;
   margin-bottom: 100px;
   transform: translate(-50%, 0);
-  background: #191919;
-  color: #dfe6e9;
+  background: #dfe6e9;
+  /* color: #2d3436; */
   /* text-align: center; */
   border-radius: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 0;
 }
 
 .listitem{
-  width: 550px;
-  height: 220px;
-  padding: 20px;
-  margin: 10px;
+  position: relative;
+  width: 100%;
+  height: 20%;
+  padding: 2%;
+  margin: 2%;
   border-radius: 12px;
   list-style-type: none;
-  background-color: #282C34;
+  background-color: #b2bec3;
+  display: flex;
 }
 
-.listimage{
-  position: relative;
+.info{
+
+}
+
+.userbook{
+  margin: auto;
+}
+
+.userbook a button{
+  border: 0;
+  background: none;
+  vertical-align: middle;
+  text-align: center;
+  border: 1px solid #2d3436;
+  height: auto;
+  width: auto;
+  border-radius: 0;
+  transition: 0.25s;
+  cursor: pointer;
+  font-size: 1.1em;
+}
+
+.userbook a{
+  text-decoration: none;
+}
+
+.userbook a button:hover{
+  background: #dfe6e9;
+}
+
+.listitem .listimage{
+  position: absolute;
   transform: translate(0, -50%);
   top: 50%;
   right: 3%;
   float: right;
   margin: 0;
   padding: 0;
+  height: 90%;
+  width: 30%;
 }
 
 .listimage img{
-  position: relative;
+  height: 100%;
   width: auto;
-  height: auto;
-  max-width: 200px;
-  max-height: 200px;
+  float: right;
   border-radius: 12px;
   transition: transform 0.2s, opacity 1s;
 }
@@ -57,13 +92,55 @@
   font-weight: 500;
 }
 
+.itemlisth1{
+  font-size: 2.0em;
+  font-family: 'Raleway', sans-serif;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 5%;
+}
+
+.itemlista{
+  text-decoration: none;
+  color: inherit;
+}
+
+.itemlista:visited{
+  color: inherit;
+}
+
+.itemlista button{
+  position: relative;
+  /* top: 10%; */
+  /* right: 5%; */
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 1px solid #00b894;
+  padding: 14px 40px;
+  width: 250px;
+  outline: none;
+  /* color: #2d3436; */
+  border-radius: 24px;
+  transition: 0.25s;
+  cursor: pointer;
+  font-size: 1.1em;
+}
+
+.itemlista button:hover{
+  background: #00b894;
+  /* color: #191919; */
+}
+
 .listbox h1{
-    color: #ffeaa7;
+    /* color: #FB8C00; */
 }
 
 .listbox h2{
   font-size: 0.9em;
-  color: #fd79a8;
+  /* color: #D81B60; */
 }
 
 .listbox .listitem h3{
@@ -93,7 +170,7 @@
   padding: 14px 40px;
   width: 250px;
   outline: none;
-  color: #dfe6e9;
+  /* color: #2d3436; */
   border-radius: 24px;
   transition: 0.25s;
   cursor: pointer;
@@ -102,7 +179,7 @@
 
 .listbox button:hover{
   background: #00b894;
-  color: #191919;
+  /* color: #191919; */
 }
 
 
@@ -110,7 +187,7 @@
 /* detail view for author */
 
 .author_names{
-  color: #0984e3;
+  /* color: #0984e3; */
   font-size: 1.2em;
 }
 
@@ -121,7 +198,7 @@
   position: absolute;
   transform: translate(-50%, 0);
   top: 10%;
-  left: 47%;
+  left: 50%;
 }
 
 .about h1, h2, h3, h4{
@@ -129,20 +206,20 @@
   font-family: 'Raleway', sans-serif;
   text-align: center;
   font-weight: 500;
-  color: #55efc4;
+  /* color: #55efc4; */
 }
 
 .about h2{
   font-size: 1.5em;
-  color: #81ecec;
+  /* color: #81ecec; */
 }
 
 .about h3{
   font-size: 1.3em;
-  color: #74b9ff;
+  /* color: #74b9ff; */
 }
 
 .about h4{
   font-size: 1.1em;
-  color: #a29bfe;
+  /* color: #a29bfe; */
 }

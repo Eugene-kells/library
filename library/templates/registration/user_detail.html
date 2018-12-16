@@ -2,68 +2,78 @@
 
 {% block content %}
 
+<div class="page">
 
-<div class="userdetailbox">
+  <div class="userdetailbox">
 
-  {% if customuser.photo %}
-  <a href="{{ customuser.photo.url }}"><img src="{{ customuser.photo.url }}"></a>
-  {% endif %}
-
-  <div class="username">
-    {{ customuser.username }}
-  </div>
-
-  <p></p>
-
-  <div class="names">
-    {% if customuser.first_name %}
-      {{ customuser.first_name }}
+    {% if customuser.photo %}
+    <a href="{{ customuser.photo.url }}"><img src="{{ customuser.photo.url }}"></a>
     {% endif %}
-    {% if customuser.last_name %}
-      {{ customuser.last_name }}
+
+    <div class="username">
+      {{ customuser.username }}
+    </div>
+
+    <p></p>
+
+    <div class="names">
+      {% if customuser.first_name %}
+        {{ customuser.first_name }}
+      {% endif %}
+      {% if customuser.last_name %}
+        {{ customuser.last_name }}
+      {% endif %}
+    </div>
+
+    <p></p>
+
+    {% if customuser.status %}
+    <div class="status">
+      {{ customuser.status }}
+    </div>
     {% endif %}
+
+    <p></p>
+
+    <h2 class="description_header">About me:</h2>
+
+    {% if customuser.description %}
+    <div class="description">
+      {{ customuser.description }}
+    </div>
+    {% endif %}
+
+    <p></p>
+
+
+    {% if books %}
+      <div class="username">
+        My books:
+      </div>
+      <div class="names">
+        {% for book in books %}
+          <a href="{% url 'book_detail' pk=book.id %}">{{ book.title }}</a><br>
+        {% endfor%}
+      </div>
+    {% else %}
+      <div class="username">
+        You have no books
+      </div>
+    {% endif %}
+
+    <p></p>
+
+    {% if request.user.pk == customuser.pk %}
+    <a href="{% url 'user_update' %}">
+      <button type="button">
+        Edit
+      </button>
+    </a>
+    {% endif %}
+
   </div>
-
-  <p></p>
-
-  {% if customuser.status %}
-  <div class="status">
-    {{ customuser.status }}
-  </div>
-  {% endif %}
-
-  <p></p>
-
-  <h2 class="description_header">About me:</h2>
-
-  {% if customuser.description %}
-  <div class="description">
-    {{ customuser.description }}
-  </div>
-  {% endif %}
-
-  <p></p>
-
-
-  <div class="username">
-    My books:
-  </div>
-  <div class="names">
-    {% for book in books %}
-      <a href="{% url 'book_detail' pk=book.id %}">{{ book.title }}</a><br>
-    {% endfor%}
-  </div>
-
-  <p></p>
-
-  {% if request.user.pk == customuser.pk %}
-  <a href="{% url 'user_update' %}">
-    <button type="button">
-      Edit
-    </button>
-  </a>
-  {% endif %}
 
 </div>
+
 
 {% endblock %}

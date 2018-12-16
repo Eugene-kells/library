@@ -2,55 +2,109 @@
 
 {% block content %}
 
+<div class="page">
 
-<div class="userdetailbox">
+  <div class="userdetailbox">
 
-  {% if book.cover %}
-  <a href="{{ book.cover.url }}"><img src="{{ book.cover.url }}"></a>
-  {% endif %}
-
-
-  <div class="username">
-      {{ book.title }}
-  </div>
-
-  <div class="names">
-    <a href="{% url 'author_detail' pk=book.author.pk %}">
-      {{ book.author.first_name}} {{ book.author.last_name }}
-    </a>
-  </div>
-
-  <p></p>
-
-  <div class="author_names">
-    {% if book.release_date %}
-      Release: <i>{{ book.release_date }}</i>
+    {% if book.cover %}
+    <a href="{{ book.cover.url }}"><img src="{{ book.cover.url }}"></a>
     {% endif %}
+
+
+    <div class="username">
+        {{ book.title }}
+    </div>
+
+    <div class="names">
+      Author:
+      <a href="{% url 'author_detail' pk=book.author.pk %}">
+        {{ book.author.first_name}} {{ book.author.last_name }}
+      </a>
+    </div>
+
+    <p></p>
+
+    <div class="author_names">
+      {% if book.release_date %}
+        Release: <i>{{ book.release_date }}</i>
+      {% endif %}
+    </div>
+
+
+    <p></p>
+
+    <h2 class="description_header">About book:</h2>
+
+    <p></p>
+
+    {% if book.description %}
+      <div class="description">
+        {{ book.description }}
+      </div>
+    {% endif %}
+
+    <p></p>
+
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'book_update' pk=book.pk %}">
+      <button type="button">
+        Edit
+      </button>
+    </a>
+    {% endif %}
+
+
   </div>
 
 
-  <p></p>
+  <div class="comments">
 
-  <h2 class="description_header">About book:</h2>
+    {% if request.user.is_authenticated %}
 
-  <p></p>
+      <a href="{% url 'create_comment' book_pk=book.pk %}">
+      <button type="button">
+        Post a comment
+      </button>
+    </a>
 
-  {% if book.description %}
-  <div class="description">
-    {{ book.description }}
+    {% endif %}
+
+    {% for comment in comments %}
+      <div class="comment" id="comment_{{ comment.pk }}">
+        <div class="creator">
+          {% if comment.parent_comment %}
+            <a href="{% url 'user' pk=comment.creator.pk %}">{{ comment.creator.username }}</a>
+            -> <a href="#comment_{{ comment.parent_comment.pk }}">comment at {{ comment.parent_comment.date }}</a>
+             from <a href="{% url 'user' pk=comment.parent_comment.creator.pk %}">{{ comment.parent_comment.creator.username }}</a>
+
+          {% else %}
+            <a href="{% url 'user' pk=comment.creator.pk %}">{{ comment.creator.username }}</a>
+          {% endif %}
+        </div>
+        <div class="date">
+          <i>{{ comment.date }}</i>
+        </div>
+        <div class="text">
+          {{ comment.text }}
+        </div>
+
+        {% if request.user.is_authenticated %}
+          <div class="reply">
+            <a href="{% url 'create_reply' book_pk=book.pk reply_pk=comment.pk %}"><button type="button">Reply</button></a>
+            {% if request.user == comment.creator %}
+              <a href="{% url 'update_comment' pk=comment.pk %}"><button type="button">Edit</button></a>
+              <a href="{% url 'delete_comment' pk=comment.pk %}?next={% url 'book_detail' pk=book.pk %}"><button type="button">Delete</button></a>
+            {% endif %}
+          </div>
+        {% endif %}
+
+      </div>
+    {% endfor %}
+
   </div>
-  {% endif %}
-
-  <p></p>
-
-  {% if request.user.is_authenticated %}
-  <a href="{% url 'book_update' pk=book.pk %}">
-    <button type="button">
-      Edit
-    </button>
-  </a>
-  {% endif %}
 
 </div>
+
+
 
 {% endblock %}

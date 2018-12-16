@@ -2,18 +2,18 @@
 .loginbox{
   position: absolute;
   top: 10%;
-  left: 47%;
+  left: 50%;
   width: 300px;
   padding: 40px;
   transform: translate(-50%, 0);
-  background: #191919;
+  background: #dfe6e9;
   text-align: center;
   border-radius: 12px;
   margin-bottom: 30px;
 }
 
 .loginbox h1{
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   text-transform: uppercase;
   font-weight: 500;
 }
@@ -29,7 +29,7 @@
   padding: 14px 10px;
   width: 200px;
   outline: none;
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   border-radius: 24px;
   transition: 0.25s;
   font-size: 1.2em;
@@ -55,7 +55,7 @@
   padding: 14px 40px;
   width: 150px;
   outline: none;
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   border-radius: 24px;
   transition: 0.25s;
   cursor: pointer;
@@ -64,16 +64,16 @@
 
 .loginbox input[type="submit"]:hover{
   background: #fdcb6e;
-  color: #191919;
+  /* color: #191919; */
 }
 
 .loginbox ul li{
   font-style: italic;
-  color: #00b894;
+  /* color: #00b894; */
 }
 
 .loginbox .errorlist li{
-  color: #d63031;
+  /* color: #d63031; */
   text-align: justify;
 }
 
@@ -88,7 +88,7 @@
   padding: 14px 40px;
   width: 250px;
   outline: none;
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   border-radius: 24px;
   transition: 0.25s;
   cursor: pointer;
@@ -96,7 +96,7 @@
 }
 
 .loginbox .warning{
-  color: #d63031;
+  /* color: #d63031; */
 }
 
 .loginbox a{
@@ -105,7 +105,7 @@
 
 .loginbox a button:hover{
   background: #6c5ce7;
-  color: #191919;
+  /* color: #191919; */
 }
 
 /* ##################################################################### */
@@ -113,17 +113,17 @@
 .signupbox{
   position: absolute;
   top: 12%;
-  left: 47%;
+  left: 50%;
   width: 550px;
   padding: 40px;
   transform: translate(-50%, 0);
-  background: #191919;
+  background: #dfe6e9;
   text-align: center;
   border-radius: 12px;
 }
 
 .signupbox h1{
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   text-transform: uppercase;
   font-weight: 500;
 }
@@ -139,7 +139,7 @@
   padding: 14px 10px;
   width: 200px;
   outline: none;
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   border-radius: 24px;
   transition: 0.25s;
   font-size: 1.2em;
@@ -169,7 +169,7 @@
   padding: 14px 40px;
   width: 150px;
   outline: none;
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   border-radius: 24px;
   transition: 0.25s;
   cursor: pointer;
@@ -178,22 +178,22 @@
 
 .signupbox input[type="submit"]:hover{
   background: #fdcb6e;
-  color: #191919;
+  /* color: #191919; */
 }
 
 .signupbox ul li{
   font-style: italic;
-  color: #00b894;
+  /* color: #00b894; */
 }
 
 .signupbox .errorlist li{
-  color: #d63031;
+  /* color: #d63031; */
   text-align: justify;
 }
 
 .signupbox .helptext{
   font-style: italic;
-  color: #00b894;
+  /* color: #00b894; */
 }
 
 /* ##################################################################### */
@@ -201,17 +201,17 @@
 .userupdatebox{
   position: absolute;
   top: 12%;
-  left: 47%;
+  left: 50%;
   width: 550px;
   padding: 40px;
   transform: translate(-50%, 0);
-  background: #191919;
+  background: #dfe6e9;
   text-align: center;
   border-radius: 12px;
 }
 
 .userupdatebox h1{
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   text-transform: uppercase;
   font-weight: 500;
 }
@@ -227,7 +227,7 @@
   padding: 14px 10px;
   width: 400px;
   outline: none;
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   border-radius: 24px;
   transition: 0.25s;
   font-size: 1.2em;
@@ -257,7 +257,7 @@
   padding: 14px 40px;
   width: 150px;
   outline: none;
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   border-radius: 24px;
   transition: 0.25s;
   cursor: pointer;
@@ -276,7 +276,7 @@
   padding: 14px 10px;
   width: 400px;
   outline: none;
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   border-radius: 24px;
   transition: 0.25s;
   font-size: 1.2em;
@@ -293,7 +293,7 @@
   padding: 14px 40px;
   width: 200px;
   outline: none;
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   border-radius: 24px;
   transition: 0.25s;
   cursor: pointer;
@@ -318,7 +318,7 @@
   padding: 14px 40px;
   width: 250px;
   outline: none;
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   border-radius: 24px;
   transition: 0.25s;
   cursor: pointer;
@@ -326,7 +326,7 @@
 }
 
 .userupdatebox .warning{
-  color: #d63031;
+  /* color: #d63031; */
 }
 
 .userupdatebox a{
@@ -335,33 +335,33 @@
 
 .userupdatebox a button:hover{
   background: #d63031;
-  color: #191919;
+  /* color: #191919; */
 }
 
 .userupdatebox input[type="submit"]:hover{
   background: #fdcb6e;
-  color: #191919;
+  /* color: #191919; */
 }
 
 .userupdatebox input[type="file"]:hover{
   background: #0984e3;
-  color: #191919;
+  /* color: #191919; */
 }
 
 .userupdatebox ul li{
   font-style: italic;
-  color: #00b894;
+  /* color: #00b894; */
 }
 
 .userupdatebox .errorlist li{
-  color: #d63031;
+  /* color: #d63031; */
   text-align: justify;
   text-align: justify;
 }
 
 .userupdatebox .helptext{
   font-style: italic;
-  color: #00b894;
+  /* color: #00b894; */
   text-align: justify;
 }
 
@@ -377,33 +377,33 @@
   padding: 14px 10px;
   width: 300px;
   outline: none;
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   border-radius: 24px;
   transition: 0.25s;
   font-size: 1.2em;
 }
 
 .userupdatebox select:hover{
-  color: #2d3436;
+  /* color: #2d3436; */
 }
 
 /* ########################################################## */
 /* detail view for user */
 .userdetailbox{
-  position: absolute;
+  position: relative;
   margin: 0;
   margin-bottom: 30px;
-  padding: 10px;
+  padding: 3%;
   top: 10%;
-  left: 47%;
+  left: 50%;
   transform: translate(-50%, 0);
-  background: #191919;
+  background: #dfe6e9;
   border-radius: 12px;
-  width: 900px;
+  width: 70%;
   height: auto;
   min-height: 300px;
   text-align: justify;
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
 }
 
 .userdetailbox img{
@@ -423,22 +423,22 @@
 }
 
 .userdetailbox .username{
-  color: #d63031;
+  /* color: #d63031; */
   font-size: 3em;
 }
 
 .userdetailbox .names{
-  color: #0984e3;
+  /* color: #0984e3; */
   font-size: 1.8em;
 }
 
 .userdetailbox .status{
-  color: #6c5ce7;
+  /* color: #6c5ce7; */
   font-size: 1.3em;
 }
 
 .userdetailbox .description{
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   font-size: 1.2em;
 }
 
@@ -453,7 +453,7 @@
   padding: 14px 40px;
   width: 150px;
   outline: none;
-  color: #dfe6e9;
+  /* color: #dfe6e9; */
   border-radius: 24px;
   transition: 0.25s;
   cursor: pointer;
@@ -461,21 +461,21 @@
 }
 
 .userdetailbox a{
-  color: #00cec9;
+  /* color: #00cec9; */
   text-decoration: none;
 }
 
 .userdetailbox a:visited{
-  color: #00cec9;
+  /* color: #00cec9; */
 }
 
 .userdetailbox a button:hover{
   background: #fdcb6e;
-  color: #191919;
+  /* color: #191919; */
 }
 
 .description_header{
-  color: #fdcb6e;
+  /* color: #fdcb6e; */
 }
 
 /* ########################################################## */
@@ -491,7 +491,7 @@
   font-size: 10em;
   text-transform: uppercase;
   font-weight: 900;
-  color: #b2bec336;
+  /* color: #b2bec336; */
   background-image: url("../images/water.png");
   -webkit-background-clip: text;
   animation: water 30s infinite;
@@ -499,12 +499,12 @@
 
 .middle h2{
   text-align: left;
-  color: #fdcb6e;
+  /* color: #fdcb6e; */
 }
 
 .middle h3{
   text-align: right;
-  color: #fab1a0;
+  /* color: #fab1a0; */
 }
 
 @keyframes water {

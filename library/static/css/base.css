@@ -1,15 +1,21 @@
 body{
   margin: 0;
   padding: 0;
-  background: #282C34; /* 40, 46, 51 */
+  background: #b2bec3; /* 40, 46, 51 */
   /* background-image: url("../icons/main_back.png") */
   font-family: 'Raleway', sans-serif;
-  color: #dfe6e9;
+  color: #2d3436;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
 }
 
 /*  menu */
 .side{
   position: fixed;
+  z-index: 1;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -38,7 +44,7 @@ body{
 .search-box{
   position: absolute;
   top: 5%;
-  left: 47%;
+  left: 50%;
   transform: translate(-50%, -50%);
   background: #636e72;
   height: 30px;

@@ -10,12 +10,13 @@ urlpatterns = [
     path('book/new/', views.BookCreateView.as_view(), name='book_new'),
     path('book/update/<int:pk>/', views.BookUpdateView.as_view(), name='book_update'),
     # book-user block  | shouldn't do this as POST?
-    path('book/add/<int:pk>/', views.add_book, name='add_user_book'), # TODO :: do this in a template
-    path('book/delete/<int:pk>/', views.delete_book, name='delete_user_book'), # TODO :: do this in a template
-    # book-comment block
-    path('book/<int:pk>/comment/', views.add_comment_to_book, name='add_comment_to_book'), # TODO :: remove this
+    path('book/add/<int:pk>/', views.add_book, name='add_user_book'),
+    path('book/delete/<int:pk>/', views.delete_book, name='delete_user_book'),
     # comment block
-    path('comment/remove/<int:pk>/', views.remove_comment, name='remove_comment'), # TODO :: remove this
+    path('comment/create/<int:book_pk>/', views.CommentCreate.as_view(), name='create_comment'),
+    path('comment/create/<int:book_pk>/<int:reply_pk>/', views.ReplyCreate.as_view(), name='create_reply'),
+    path('comment/update/<int:pk>/', views.CommentUpdate.as_view(), name='update_comment'),
+    path('comment/remove/<int:pk>/', views.comment_delete, name='delete_comment'),
     # author block
     path('authors/', views.AuthorListView.as_view(), name='author_list'),
     path('author/<int:pk>/', views.AuthorDetailView.as_view(), name='author_detail'),
